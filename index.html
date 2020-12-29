@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!--jquery-->
+<script type="text/javascript"  src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type='text/javascript'>
+$(document).ready(function(){
+	//資廖來源
+	var jsonstr = {"id":1,"width":1920,"height":1080,"zones":[{"id":1,"width":500,"height":880,"left":0,"top":0,"name":"zone1"},{"id":2,"width":1420,"height":200,"left":500,"top":0,"name":"zone2"},{"id":3,"width":1920,"height":200,"left":0,"top":880,"name":"zone3"},{"id":4,"width":1420,"height":680,"left":500,"top":200,"name":"zone4"}]};
+	var html = "";
+	var obj = "#digibox";
+	var ratio = 3;
+
+	$(obj).html('');
+	$(obj).append('<div class="box_'+jsonstr['id']+'"></div>');
+	$(obj+' .box_'+jsonstr['id'])
+		.css('width',(jsonstr['width']/ratio))
+		.css('height',(jsonstr['height']/ratio))
+		.css('border','1px #000 solid')
+		.css('position','relative')
+		.css('display','table');
+	
+	$.each(jsonstr['zones'],function(key,row) {
+		$(obj+' .box_'+jsonstr['id']).append('<div class="zones_'+row['id']+' zones"><span>'+row['id']+'</span></div>');
+		$(obj+' .box_'+jsonstr['id']+' .zones_'+row['id'])
+			.css('width',(row['width']/ratio))
+			.css('height',(row['height']/ratio))
+			.css('border','1px dashed #f69c55')
+			.css('left',(row['left']/ratio))
+			.css('top',(row['top']/ratio))
+			.css('text-align','center')
+			.css('display','table-cell')
+  			.css('vertical-align','middle')
+			.css('color','#f69c55')
+			.css('font-size','50px')
+			.css('position','absolute')
+			.css('cursor','pointer');
+		
+		$(obj+' .box_'+jsonstr['id']+' .zones_'+row['id']+ ' > span').css('position','relative').css('top',((row['height']/ratio)/2/4))
+		
+		$(obj+' .box_'+jsonstr['id']+' .zones_'+row['id']).on('click',function(){
+			alert(row['id']);
+			$('.zones').css('background-color','');
+			$(obj+' .box_'+jsonstr['id']+' .zones_'+row['id']).css('background-color','#ccc');
+		})
+	});
+})	
+</script>
+<style type="text/css">
+.zones:hover{
+	background-color: #ccc;
+}
+</style>
+</head>
+<body>
+	<center>
+		<div>可自行點擊區塊</div>
+		<div id='digibox'></div>
+	</center>
+</body>
+</html>
